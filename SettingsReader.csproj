@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCoreDecorators" Version="1.0.21" />
+    <PackageReference Include="Flurl.Http" Version="3.2.4" />
+    <PackageReference Include="MyYamlSettingsParser" Version="1.0.7" />
+  </ItemGroup>
+
+</Project>

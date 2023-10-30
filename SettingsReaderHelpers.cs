@@ -9,7 +9,7 @@ internal static class SettingsReaderHelpers
 {
     private const string SettingsUrlEnvVariable = "SETTINGS_URL";
 
-    private static byte[] ReadingFromEnvVariable()
+    private static byte[]? ReadingFromEnvVariable()
     {
 
         var settingsUrl = Environment.GetEnvironmentVariable(SettingsUrlEnvVariable);
@@ -31,10 +31,13 @@ internal static class SettingsReaderHelpers
             
     }
 
-    private static byte[] ReadFromFileInHome(string fileName)
+    private static byte[]? ReadFromFileInHome(string fileName)
     {
         var settingsFile = Environment.GetEnvironmentVariable("HOME").AddLastSymbolIfNotExists(Path.DirectorySeparatorChar) + fileName;
-
+        if (!File.Exists(settingsFile))
+        {
+            return null;
+        }
         try
         {
             return File.ReadAllBytes(settingsFile);
@@ -57,13 +60,10 @@ internal static class SettingsReaderHelpers
 
         var yaml = ReadFromFileInHome(fileName) ?? ReadingFromEnvVariable();
 
-        if (yaml == null)
-        {
-            Console.WriteLine();
-            throw new Exception("No settings found");
-        }
-            
-        return yaml.ParseSettings<T>();
+        if (yaml != null) return yaml.ParseSettings<T>();
+        Console.WriteLine();
+        throw new Exception("No settings found");
+
     }
 
         
